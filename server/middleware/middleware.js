@@ -22,7 +22,7 @@ exports.init = function (server) {
   server.set('view engine', 'ejs');
 
   server.use(morgan({ format: 'dev', immediate: true }));
-  server.use(favicon(config.faviconPath));
+  //server.use(favicon(config.faviconPath));
 
   staticFiles.init(server);
 };

@@ -50,9 +50,9 @@
     element = document.getElementById('recipe');
     button = document.getElementById('slide-color-trigger');
 
-    color = '#334488';
-    slideDuration = 3000;
-    updateDelay = 100;
+    color = '#6E582B';
+    slideDuration = 2000;
+    updateDelay = 10;
     reverseSlide = false;
 
     textColorSlider = new TextColorSlider(element, color);

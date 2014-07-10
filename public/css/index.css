@@ -1,7 +1,10 @@
 
+body, div, p, h1, h2, h3, h4, h5 {
+  margin: 0; padding: 0;
+}
+
 body {
   height: 1000px;
-  margin: 0; padding: 0;
   background: #242624;
   color: #c3c5bf;
   font-size: 18px;
@@ -21,3 +24,13 @@ a { color: #f0ffb0; text-decoration: none; }
 a:hover { color: #80c050; text-decoration: underline; }
 a:active { color: #509020; }
 a:visited { color: #90c080; }
+
+#recipe {
+  width: 600px;
+  margin: 0 auto;
+}
+
+button {
+  position: relative;
+  z-index: 1000;
+}

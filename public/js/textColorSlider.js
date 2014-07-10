@@ -18,19 +18,49 @@
    * @param {HTMLElement} element
    */
   function createElements(element) {
-    var textColorSlider, originalElement, copyElement, containerElement;
+    var textColorSlider, parentElement, copyElement, containerElement, offsetLeft, offsetTop,
+        width, height;
 
     textColorSlider = this;
 
-    // TODO:
+    parentElement = element.parentNode;
+    if (getComputedStyle(parentElement).getPropertyValue('position') === 'static') {
+      parentElement.style.position = 'relative';
+    }
 
-    originalElement = ;
-    copyElement = ;
-    containerElement = ;
+    containerElement = document.createElement('div');
+    parentElement.appendChild(containerElement);
+    containerElement.style.position = 'absolute';
+    containerElement.style.overflow = 'hidden';
 
-    textColorSlider.originalElement = originalElement;
+    copyElement = element.cloneNode(true);
+    containerElement.appendChild(copyElement);
+    copyElement.style.position = 'absolute';
+    copyElement.style.borderColor = 'transparent';
+    copyElement.style.backgroundColor = 'transparent';
+    copyElement.style.color = textColorSlider.color;
+    copyElement.id += '-copy';
+
+    offsetLeft = element.offsetLeft;
+    offsetTop = element.offsetTop;
+    width = element.offsetWidth;
+    height = element.offsetHeight;
+
+    copyElement.style.width = width + 'px';
+    copyElement.style.height = height + 'px';
+    copyElement.style.left = '0px';
+    copyElement.style.top = height + 'px';
+
+    containerElement.style.width = width + 'px';
+    containerElement.style.height = height + 'px';
+    containerElement.style.left = offsetLeft + 'px';
+    containerElement.style.top = offsetTop - height + 'px';
+
+    textColorSlider.originalElement = element;
     textColorSlider.copyElement = copyElement;
     textColorSlider.containerElement = containerElement;
+    textColorSlider.offsetHeight = height;
+    textColorSlider.offsetTop = offsetTop;
   }
 
   // ------------------------------------------------------------------------------------------- //
@@ -42,11 +72,15 @@
    * @param {number} progress A number between 0 and 1.
    */
   function setColorSlideProgress(progress) {
-    var textColorSlider;
+    var textColorSlider, containerOffset, copyOffset;
 
     textColorSlider = this;
 
-    // TODO:
+    containerOffset = textColorSlider.offsetTop - (1 - progress) * textColorSlider.offsetHeight;
+    copyOffset = (1 - progress) * textColorSlider.offsetHeight;
+
+    textColorSlider.containerElement.style.top = containerOffset + 'px';
+    textColorSlider.copyElement.style.top = copyOffset + 'px';
   }
 
   /**
@@ -96,6 +130,8 @@
     textColorSlider.originalElement = null;
     textColorSlider.copyElement = null;
     textColorSlider.containerElement = null;
+    textColorSlider.offsetHeight = 0;
+    textColorSlider.offsetTop = 0;
 
     textColorSlider.setColorSlideProgress = setColorSlideProgress;
     textColorSlider.endColorSlide = endColorSlide;
