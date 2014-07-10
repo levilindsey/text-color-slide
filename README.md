@@ -2,7 +2,7 @@
 
 #### Animates a linear color change across text
 
-_See the app running at [www.jackieandlevi.com/text-color-slide](http://www.jackieandlevi.com/text-color-slide)!_
+_See this running at [www.jackieandlevi.com/text-color-slide](http://www.jackieandlevi.com/text-color-slide)!_
 
 ======
 
