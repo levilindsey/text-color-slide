@@ -1,5 +1,23 @@
 
-body, div, p, span, h1, h2, h3, h4, h5 {
-  margin: 0;
-  padding: 0;
+body {
+  height: 1000px;
+  margin: 0; padding: 0;
+  background: #242624;
+  color: #c3c5bf;
+  font-size: 18px;
 }
+
+h1 {
+  font-size: 32px;
+  text-align: center;
+  width: 100%;
+}
+
+h2 {
+  font-size: 26px;
+}
+
+a { color: #f0ffb0; text-decoration: none; }
+a:hover { color: #80c050; text-decoration: underline; }
+a:active { color: #509020; }
+a:visited { color: #90c080; }

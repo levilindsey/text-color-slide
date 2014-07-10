@@ -5,7 +5,7 @@
  */
 (function () {
 
-  var config, util, log;
+  var config, util, log, TextColorSlider;
 
   // ------------------------------------------------------------------------------------------- //
   // Private static functions
@@ -31,11 +31,73 @@
    * Resets all of the state for this app.
    */
   function reset() {
-    // TODO: initStaticFields
+    TextColorSlider = app.TextColorSlider;
+    TextColorSlider.initStaticFields();
 
     log.i('reset', 'All modules initialized');
 
     checkBrowserCompatibility();
+
+    setUpColorSlider();
+  }
+
+  /**
+   * TODO: doc
+   */
+  function setUpColorSlider() {
+    var textColorSlider, element, button, color, updateDelay, slideDuration, reverseSlide, interval;
+
+    element = document.getElementById('recipe');
+    button = document.getElementById('slide-color-trigger');
+
+    color = '#334488';
+    slideDuration = 3000;
+    updateDelay = 100;
+    reverseSlide = false;
+
+    textColorSlider = new TextColorSlider(element, color);
+
+    button.addEventListener('click', function () {
+      clearInterval(interval);
+      interval = slideColor(textColorSlider, reverseSlide, slideDuration, updateDelay);
+      reverseSlide = !reverseSlide;
+    }, false);
+  }
+
+  /**
+   * TODO: doc
+   *
+   * @param {TextColorSlider} textColorSlider
+   * @param {boolean} reverseSlide
+   * @param {number} slideDuration In milliseconds.
+   * @param {number} updateDelay In milliseconds.
+   * @returns {number} Interval ID.
+   */
+  function slideColor(textColorSlider, reverseSlide, slideDuration, updateDelay) {
+    var startTime, interval;
+
+    startTime = Date.now();
+
+    interval = setInterval(function () {
+      var deltaTime, currentProgress;
+
+      // Calculate the color slide progress
+      deltaTime = Date.now() - startTime;
+      currentProgress = deltaTime / slideDuration;
+      currentProgress = currentProgress >= 1 ? 1 : currentProgress;
+      currentProgress = reverseSlide ? 1 - currentProgress : currentProgress;
+
+      // Update the color slide
+      textColorSlider.setColorSlideProgress(currentProgress);
+
+      // Check if the slide is done
+      if (currentProgress >= 1) {
+        clearInterval(interval);
+        reverseSlide = !reverseSlide;
+      }
+    }, updateDelay);
+
+    return interval;
   }
 
   /**
